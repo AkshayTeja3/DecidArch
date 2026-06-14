@@ -1,0 +1,60 @@
+simulation:
+  name: "Bernays Propaganda Simulator"
+  version: "1.0"
+  random_seed: null  # Use None for true randomness
+  rounds: 100
+
+environment:
+  scandal_interval: 5  # rounds per election cycle
+  truth_revelation:
+    min_probability: 0.05
+    max_probability: 0.5
+  exposure:
+    per_scandal_chance: [0.2, 0.4]  # uniform range
+    belief_drop_factor: 0.9
+
+agents:
+  receivers:
+    count: 100
+    initial_belief_range: [30, 70]
+    skepticism_range: [0.1, 0.7]
+    friends_range: [3, 10]
+    belief_spread_rate: 0.3
+    belief_decay_rate: 0.02  # 2% per round
+    high_believer_threshold: 70
+
+  sources:
+    count: 3
+    names: ["Govt News Agency", "Independent Journal", "Social Media Influencer"]
+    credibility_range: [30, 80]
+    domain: "general"
+    message: "Vote for X"
+    intent: "neutral"
+    exposure:
+      probability: 0.08
+      damage_range: [20, 40]
+    decay_rate: 0.01  # 1% per round
+
+  authorities:
+    count: 5
+    names: ["Dr. Smith", "National Church", "Celebrity A", "Local Leader", "Business Association"]
+    trust_score_range: [30, 80]
+    domain_relevance_range: [0.3, 0.9]
+    audience_size: 50
+    corruption_risk: 0.1
+
+truth:
+  actual: "Vote for X"
+  revelation_effect:
+    correct: 5
+    incorrect: -15
+
+metrics:
+  track:
+    - avg_belief
+    - high_believers
+    - low_believers
+    - avg_source_credibility
+    - avg_authority_trust
+    - scandal_count
+    - exposure_count
